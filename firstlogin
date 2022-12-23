@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Putting the semantic file in var/tmp ensures that it does not 
+# get deleted at shutdown. /tmp files seems does so.
+if [[ ! -e /var/tmp/$(date +%F).sem ]]
+then
+    touch /var/tmp/"$(date +%F)".sem
+    "$HOME"/.local/bin/utt add "om"
+fi

@@ -1,0 +1,19 @@
+  # No sending mail
+  MAILTO=nobody
+  # Put everything in primary display
+  DISPLAY=:0.0
+
+  # Set the Path env variable - required since cron executes stuff in own shell
+  PATH=/sbin:/usr/bin:/home/satish/.local/bin
+
+  # crontab entry to open a terminal (`st` in this case) and run the program dot at the hour
+	0 * * * *  /usr/local/bin/st -e /usr/bin/uttlog
+
+  # Using zenity to display a dialog every 30 minutes to allow us an entry
+	*/30 * * * *  bash -c 'zenity --entry --title "What did you do?" --text "Project: Description" | xargs -i utt add {} '
+
+  # If you just want a notification to enter the details and not actually run the program use `notify-send` cron job
+  # Better to ensure that your */20 is a factor of 60 so that it gets repeated at the same time every hour ... and etc
+  */20 * * * *  XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send Hey "Remember to log your activity using uttlog..." *
+
+
